@@ -134,3 +134,6 @@ _NCrunch*
 
 # Roblox .rbxl game files
 *.rbxl
+
+# Program.cs
+Program.cs
