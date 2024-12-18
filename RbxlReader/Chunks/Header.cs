@@ -1,4 +1,5 @@
 using System.Linq;
+using RbxlReader.Utility;
 namespace RbxlReader.Chunks;
 
 /// <summary>
@@ -13,9 +14,11 @@ public class Header : IBinaryChunk {
     public int ClassCount;
     public int InstanceCount;
 
-    public static IBinaryChunk? Parse(BinaryReader reader) {
+    public static IBinaryChunk? Parse(Stream stream) {
         Header newHeader = new();
         
+        BinaryReader reader = new(stream);
+
         char[] magicNumber = reader.ReadChars(8);
         if (!MAGIC_NUMBER.SequenceEqual(magicNumber)) return null;
 

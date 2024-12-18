@@ -12,9 +12,10 @@ public class ChunkHeader : IBinaryChunk {
         ChunkName = name;
     }
 
-    public static IBinaryChunk Parse(BinaryReader reader) {
-        char[] name = reader.ReadChars(4);
+    public static IBinaryChunk Parse(Stream stream) {
+        BinaryReader reader = new(stream);
 
+        char[] name = reader.ReadChars(4);
         uint compressed = reader.ReadUInt32();
         uint uncompressed = reader.ReadUInt32();
         reader.ReadBytes(4); //Skip 4 reserved bytes.
