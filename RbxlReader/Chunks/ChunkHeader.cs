@@ -1,6 +1,6 @@
 namespace RbxlReader.Chunks;
 
-public class ChunkHeader : IChunk {
+public class ChunkHeader : IBinaryChunk {
     
     public char[] ChunkName;
 
@@ -12,7 +12,7 @@ public class ChunkHeader : IChunk {
         ChunkName = name;
     }
 
-    public static IChunk Parse(BinaryReader reader) {
+    public static IBinaryChunk Parse(BinaryReader reader) {
         char[] name = reader.ReadChars(4);
 
         uint compressed = reader.ReadUInt32();
