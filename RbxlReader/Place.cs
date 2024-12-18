@@ -6,11 +6,7 @@ namespace RbxlReader;
 public class Place {
     public PlaceFile Rbxl;
 
-    private string _filePath;
-
-
     public Place(string path) {
-        _filePath = path;
         Rbxl = PlaceFile.Load(path);
     }
 
