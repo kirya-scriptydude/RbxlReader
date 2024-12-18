@@ -4,14 +4,18 @@ using RbxlReader.Chunks;
 namespace RbxlReader;
 
 /// <summary>
-/// Low-level representation of a .rbxl data. Holds information about data chunks.
+/// Lower-level representation of a .rbxl data. Holds information about data chunks.
 /// </summary>
 public class PlaceFile {
 
     public Header FileHeader;
 
-    public PlaceFile(Header head) {
+    //temporary variable for testing
+    public ChunkHeader ExampleChunkHeader;
+
+    public PlaceFile(Header head, ChunkHeader headhead) {
         FileHeader = head;
+        ExampleChunkHeader = headhead;
     }
 
     public static PlaceFile Load(string path) {
@@ -20,9 +24,12 @@ public class PlaceFile {
         var header = Header.Parse(reader);
         if (header == null) throw new IOException(".rbxl file header is corrupt.");
         
+        var chunkHeader = ChunkHeader.Parse(reader);
+        if (header == null) throw new IOException($".rbxl one of chunk headers is corrupt. Position - {reader.BaseStream.Position}");
 
         PlaceFile file = new(
-            (Header)header
+            (Header)header,
+            (ChunkHeader)chunkHeader
         );
         
         return file;
