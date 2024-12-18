@@ -9,26 +9,21 @@ public class PlaceFile {
 
     public Header FileHeader;
 
-    //temporary variable for testing
-    public ChunkHeader ExampleChunkHeader;
-
-    public PlaceFile(Header head, ChunkHeader headhead) {
+    public PlaceFile(Header head) {
         FileHeader = head;
-        ExampleChunkHeader = headhead;
     }
 
     public static PlaceFile Load(string path) {
-        BinaryReader reader = new(File.Open(path, FileMode.Open));
+        FileStream reader = File.Open(path, FileMode.Open);
 
         var header = Header.Parse(reader);
         if (header == null) throw new IOException(".rbxl file header is corrupt.");
         
         var chunkHeader = ChunkHeader.Parse(reader);
-        if (header == null) throw new IOException($".rbxl one of chunk headers is corrupt. Position - {reader.BaseStream.Position}");
+        if (header == null) throw new IOException($".rbxl one of chunk headers is corrupt. Position - {reader.Position}");
 
         PlaceFile file = new(
-            (Header)header,
-            (ChunkHeader)chunkHeader
+            (Header)header
         );
         
         return file;
