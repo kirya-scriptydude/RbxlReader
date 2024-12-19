@@ -6,6 +6,8 @@ namespace RbxlReader.Chunks;
 /// First 32 bytes of a .rbxl file. Doesn't hold much useful information, but is used to check file integrity.
 /// </summary>
 public class Header : IBinaryChunk {
+    public ChunkHeader? BinaryHeader {get; set;}
+
     public static readonly char[] MAGIC_NUMBER = {'<','r','o','b','l','o','x', '!'}; //<roblox!
     public static readonly byte[] FILE_SIGNATURE = {137, 255, 13, 10, 26, 10};
     public static readonly ushort VERSION = 0;
