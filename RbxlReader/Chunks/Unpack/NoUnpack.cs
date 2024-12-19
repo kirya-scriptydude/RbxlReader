@@ -8,7 +8,7 @@ internal class NoUnpack : IUnpackImplementaion {
         return data;
     }
 
-    public byte[] ZSTD(byte[] data) {
+    public byte[] ZSTD(byte[] data, int uncompressedLength) {
         return data;
     }
 }
