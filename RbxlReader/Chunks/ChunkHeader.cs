@@ -2,8 +2,6 @@ namespace RbxlReader.Chunks;
 
 public class ChunkHeader : IBinaryChunk {
 
-    public ChunkHeader? BinaryHeader {get; set;}
-
     public char[] ChunkName;
 
     public bool IsCompressed;
