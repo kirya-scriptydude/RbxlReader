@@ -7,8 +7,6 @@ public class ChunkHeader : IBinaryChunk {
     public bool IsCompressed;
     public uint CompressedLength;
     public uint UncompressedLength;
-
-    
     
     private ChunkHeader(char[] name) {
         ChunkName = name;
