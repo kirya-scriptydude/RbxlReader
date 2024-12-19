@@ -13,5 +13,5 @@ public interface IUnpackImplementaion {
     /// </summary>
     /// <param name="data">ZSTD compressed data</param>
     /// <returns>Uncompressed data</returns>
-    public byte[] ZSTD(byte[] data);
+    public byte[] ZSTD(byte[] data, int uncompressedLength);
 }
