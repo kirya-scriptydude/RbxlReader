@@ -18,9 +18,6 @@ public class PlaceFile {
 
         var header = Header.Parse(reader);
         if (header == null) throw new IOException(".rbxl file header is corrupt.");
-        
-        var chunkHeader = ChunkHeader.Parse(reader);
-        if (header == null) throw new IOException($".rbxl one of chunk headers is corrupt. Position - {reader.Position}");
 
         PlaceFile file = new(
             (Header)header
