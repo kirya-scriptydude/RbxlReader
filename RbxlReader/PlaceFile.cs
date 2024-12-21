@@ -34,7 +34,7 @@ public class PlaceFile {
     }
 
     private static List<ChunkPair> parseChunks(Stream stream) {
-        List<ChunkPair> chunks = new List<ChunkPair>();
+        List<ChunkPair> chunks = new List<ChunkPair>(1500);
 
         //delete later when actual chunk parsing is done
         BinaryReader reader = new(stream);
