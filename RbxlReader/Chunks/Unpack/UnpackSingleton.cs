@@ -10,6 +10,8 @@ namespace RbxlReader.Chunks.Unpacking;
 public static class Unpack {
     static IUnpackImplementaion? unpackInst;
 
+    public static readonly byte[] ZSTD_MAGIC_NUMBER = [20, 181, 47, 253];
+
     public static IUnpackImplementaion Instance() {
         if (unpackInst == null) {
             //Change this line when needed
@@ -17,5 +19,15 @@ public static class Unpack {
         }
 
         return unpackInst;
+    }
+
+    public static byte[] TryDecode(byte[] data, int uncompressedLength) {
+        var instance = Instance();
+
+        //possible magicnumber thats used by zstd
+        byte[] possibleMagicNumber = [data[0], data[1], data[2], data[3]];
+        bool isZstd = ZSTD_MAGIC_NUMBER.SequenceEqual(possibleMagicNumber);
+
+        return isZstd ? instance.ZSTD(data, uncompressedLength) : instance.LZ4(data, uncompressedLength);
     }
 }
