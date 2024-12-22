@@ -6,5 +6,5 @@ public interface IBinaryChunk {
     /// </summary>
     /// <param name="reader">Active binary reader instance.</param>
     /// <returns></returns>
-    static abstract IBinaryChunk? Parse(Stream stream);
+    static abstract IBinaryChunk? Parse(Stream stream, ChunkHeader? header = null);
 }

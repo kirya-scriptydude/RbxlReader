@@ -14,7 +14,7 @@ public class Header : IBinaryChunk {
     public int ClassCount;
     public int InstanceCount;
 
-    public static IBinaryChunk? Parse(Stream stream) {
+    public static IBinaryChunk? Parse(Stream stream, ChunkHeader? header = null) {
         Header newHeader = new();
         
         BinaryReader reader = new(stream);

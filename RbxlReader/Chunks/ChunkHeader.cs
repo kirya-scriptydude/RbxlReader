@@ -12,7 +12,7 @@ public class ChunkHeader : IBinaryChunk {
         ChunkName = name;
     }
 
-    public static IBinaryChunk Parse(Stream stream) {
+    public static IBinaryChunk Parse(Stream stream, ChunkHeader? header = null) {
         BinaryReader reader = new(stream);
 
         char[] name = reader.ReadChars(4);
