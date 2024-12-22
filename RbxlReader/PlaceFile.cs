@@ -43,18 +43,38 @@ public class PlaceFile {
         while (!endReached) {
             
             ChunkHeader header = (ChunkHeader)ChunkHeader.Parse(stream);
-            uint chunkLength = header.IsCompressed ? header.CompressedLength : header.UncompressedLength;
-            
-            reader.ReadBytes((int)chunkLength);
 
-            chunks.Add(
-                //adding empty IBinaryChunk class for testing purposes, TODO parse actual data
-                new ChunkPair(header, new Header())
-            );
-
-            if (header.ChunkName.SequenceEqual(END_NAME_SEQUENCE)) endReached = true;
+            switch(new string(header.ChunkName)) {
+                case "META":
+                    addChunk<META>(header, chunks, stream);
+                    break;
+                case "SSTR":
+                    addChunk<SSTR>(header, chunks, stream);
+                    break;
+                case "INST":
+                    addChunk<INST>(header, chunks, stream);
+                    break;
+                case "PRNT":
+                    addChunk<PRNT>(header, chunks, stream);
+                    break;
+                case "END\0":
+                    endReached = true;
+                    break;
+            }
         }
 
         return chunks;
+    }
+
+    /// <summary>
+    /// Add and then parse a chunk
+    /// </summary>
+    private static void addChunk<T>(ChunkHeader header, List<ChunkPair> chunks, Stream stream) where T : IBinaryChunk {
+        IBinaryChunk? chunk = T.Parse(stream, header);
+
+        if (chunk == null) 
+            throw new NullReferenceException($"chunk didn't parse: {new string(header.ChunkName)} at position {stream.Position}");
+        
+        chunks.Add(new ChunkPair(header, chunk));
     }
 }
