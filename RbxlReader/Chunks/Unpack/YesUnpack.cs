@@ -1,4 +1,4 @@
-using LZ4;
+using K4os.Compression.LZ4;
 using ZstdSharp;
 
 namespace RbxlReader.Chunks.Unpacking;
@@ -10,7 +10,7 @@ internal class YesUnpack : IUnpackImplementaion {
     public byte[] LZ4(byte[] data, int uncompressedLength) {
         byte[] output = new byte[uncompressedLength];
 
-        LZ4Codec.Decode(data, 0, data.Length, output, 0, uncompressedLength, true);
+        LZ4Codec.Decode(data, 0, data.Length, output, 0, output.Length);
         return output;
     }
 
