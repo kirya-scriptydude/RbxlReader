@@ -10,10 +10,10 @@ public class PlaceBinary {
 
     public static readonly string MAGIC_HEADER = "<roblox!\x89\xff\x0d\x0a\x1a\x0a";
 
-    public ushort Version;
-    public int NumberClasses;
-    public int NumberInstances;
-    public long Reserved;
+    public ushort Version {get; protected set;}
+    public int NumberClasses {get; protected set;}
+    public int NumberInstances {get; protected set;}
+    public long Reserved {get; protected set;}
 
     /// <summary>
     /// Create class and parse from file
