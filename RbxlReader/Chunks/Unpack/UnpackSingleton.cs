@@ -30,4 +30,17 @@ public static class Unpack {
 
         return isZstd ? instance.ZSTD(data, uncompressedLength) : instance.LZ4(data, uncompressedLength);
     }
+
+    public static byte[] GetUncompressedBytes(Stream stream, ChunkHeader header) {
+        byte[] data;
+        BinaryReader read = new BinaryReader(stream);
+        
+        if (header.IsCompressed) {
+            data = TryDecode(read.ReadBytes((int)header.CompressedLength), (int)header.UncompressedLength);
+        } else {
+            data = read.ReadBytes((int)header.UncompressedLength);
+        }
+
+        return data;
+    }
 }
