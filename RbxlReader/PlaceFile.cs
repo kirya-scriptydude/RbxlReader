@@ -30,6 +30,7 @@ public class PlaceFile {
             chunks
         );
         
+        reader.Dispose();
         return file;
     }
 
