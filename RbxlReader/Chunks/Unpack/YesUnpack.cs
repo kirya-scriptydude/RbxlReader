@@ -19,6 +19,6 @@ internal class YesUnpack : IUnpackImplementaion {
         var decompressor = new Decompressor();
 
         decompressor.Unwrap(data, 0, data.Length, output, 0, uncompressedLength);
-        return data;
+        return output;
     }
 }
