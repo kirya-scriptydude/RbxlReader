@@ -25,7 +25,6 @@ public class ChunkHeader : IBinaryChunk {
         chHeader.UncompressedLength = uncompressed;
         if (compressed != 0) chHeader.IsCompressed = true;
 
-        reader.Dispose();
         return chHeader;
     }
 }

@@ -32,7 +32,6 @@ public class Header : IBinaryChunk {
         newHeader.InstanceCount = reader.ReadInt32();
         reader.ReadBytes(8);
 
-        reader.Dispose();
         return newHeader;
     }
 }
