@@ -1,6 +1,7 @@
 #pragma warning disable SYSLIB0001 // Type or member is obsolete. Need to be using UTF-7
 
 using System.Text;
+using RbxlReader.Chunks;
 namespace RbxlReader;
 
 /// <summary>
@@ -15,13 +16,25 @@ public class PlaceBinary {
     public int NumberInstances {get; protected set;}
     public long Reserved {get; protected set;}
 
+    public List<BinaryChunkData> Chunks = new();
+
     /// <summary>
     /// Create class and parse from file
     /// </summary>
     /// <param name="path"></param>
     public PlaceBinary(string path) {
         using (FileStream file = File.Open(path, FileMode.Open)) {
+            BinaryReader reader = new(file);
             parseHeader(file);
+
+            // parse chunks
+            bool endReached = false;
+            while (!endReached) {
+                BinaryChunkData chunk = new(reader);
+                Chunks.Add(chunk);
+                
+                if (chunk.ChunkName == "END\0") endReached = true;
+            }
         }
     }
 
