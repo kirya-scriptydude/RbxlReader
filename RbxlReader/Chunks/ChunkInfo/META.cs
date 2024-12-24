@@ -23,5 +23,7 @@ public class META : IChunkInfo {
             string value = reader.ReadString();
             Table.Add(key, value);
         }
+
+        Raw.Rbxl.METAChunk = this;
     }
 }

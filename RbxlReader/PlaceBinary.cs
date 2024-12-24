@@ -16,7 +16,9 @@ public class PlaceBinary {
     public int NumberInstances {get; protected set;}
     public long Reserved {get; protected set;}
 
+
     public List<BinaryChunkData> Chunks = new();
+    public META? METAChunk;
 
     /// <summary>
     /// Create class and parse from file
@@ -30,9 +32,9 @@ public class PlaceBinary {
             // parse chunks
             bool endReached = false;
             while (!endReached) {
-                BinaryChunkData chunk = new(reader);
+                BinaryChunkData chunk = new(reader, this);
                 Chunks.Add(chunk);
-                
+
                 if (chunk.ChunkName == "END\0") endReached = true;
             }
         }

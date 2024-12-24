@@ -7,6 +7,7 @@ namespace RbxlReader.Chunks;
 /// Chunk raw data 
 /// </summary>
 public class BinaryChunkData {
+    public PlaceBinary Rbxl;
 
     public readonly string ChunkName;
 
@@ -17,7 +18,9 @@ public class BinaryChunkData {
 
     public bool IsCompressed => CompressedSize > 0;
 
-    public BinaryChunkData(BinaryReader reader) {
+    public BinaryChunkData(BinaryReader reader, PlaceBinary place) {
+        Rbxl = place;
+        
         byte[] chunkTypeRaw = reader.ReadBytes(4);
         ChunkName = Encoding.ASCII.GetString(chunkTypeRaw);
 
