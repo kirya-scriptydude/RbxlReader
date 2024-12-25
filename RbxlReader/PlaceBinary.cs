@@ -27,7 +27,7 @@ public class PlaceBinary {
     public PlaceBinary(string path) {
         using (FileStream file = File.Open(path, FileMode.Open)) {
             RbxlBinaryReader reader = new(file);
-            parseHeader(file);
+            parseHeader(file, reader);
 
             // parse chunks
             bool endReached = false;
@@ -47,9 +47,7 @@ public class PlaceBinary {
     /// </summary>
     public PlaceBinary() {}
 
-    private void parseHeader(Stream stream) {
-        BinaryReader reader = new(stream);
-
+    private void parseHeader(Stream stream, RbxlBinaryReader reader) {
         byte[] signature = reader.ReadBytes(14);
         string signatureString = Encoding.UTF7.GetString(signature);
 
