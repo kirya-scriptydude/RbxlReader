@@ -5,9 +5,10 @@ public class META : IChunkInfo {
     public BinaryChunkData Raw {get; set;}
     public Dictionary<string, string> Table = new();
 
-    public META(BinaryChunkData raw) {
+    public META(BinaryChunkData raw, bool loadNow = true) {
         Raw = raw;
 
+        if (!loadNow) return;
         using (MemoryStream stream = new(raw.Data)) {
             Load(stream);
         }
