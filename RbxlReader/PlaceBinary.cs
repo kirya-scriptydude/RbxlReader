@@ -35,6 +35,8 @@ public class PlaceBinary {
                 BinaryChunkData chunk = new(reader, this);
                 Chunks.Add(chunk);
 
+                evaluateChunk(chunk);
+
                 if (chunk.ChunkName == "END\0") endReached = true;
             }
         }
@@ -57,5 +59,15 @@ public class PlaceBinary {
         NumberClasses = reader.ReadInt32();
         NumberInstances = reader.ReadInt32();
         Reserved = reader.ReadInt64();
+    }
+
+    private IChunkInfo? evaluateChunk(BinaryChunkData chunk) {
+        switch(chunk.ChunkName) {
+            case "META":
+                return new META(chunk);
+
+            default:
+                return null;
+        }
     }
 }
