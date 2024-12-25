@@ -7,7 +7,7 @@ namespace RbxlReader.Chunks;
 /// Credits to Roblox-File-Format (MIT) repo. By CloneTrooper1019 (MaximumADHD)
 /// </summary>
 public class RbxlBinaryReader(Stream stream) : BinaryReader(stream) {
-     public override string ReadString() {
+    public override string ReadString() {
         int length = ReadInt32();
         byte[] buffer = ReadBytes(length);
 

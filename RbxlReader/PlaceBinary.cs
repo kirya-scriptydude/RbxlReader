@@ -26,7 +26,7 @@ public class PlaceBinary {
     /// <param name="path"></param>
     public PlaceBinary(string path) {
         using (FileStream file = File.Open(path, FileMode.Open)) {
-            BinaryReader reader = new(file);
+            RbxlBinaryReader reader = new(file);
             parseHeader(file);
 
             // parse chunks

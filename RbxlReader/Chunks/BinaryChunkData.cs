@@ -18,7 +18,7 @@ public class BinaryChunkData {
 
     public bool IsCompressed => CompressedSize > 0;
 
-    public BinaryChunkData(BinaryReader reader, PlaceBinary place) {
+    public BinaryChunkData(RbxlBinaryReader reader, PlaceBinary place) {
         Rbxl = place;
         
         byte[] chunkTypeRaw = reader.ReadBytes(4);
