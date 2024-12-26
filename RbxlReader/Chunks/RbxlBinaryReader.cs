@@ -59,6 +59,10 @@ public class RbxlBinaryReader(Stream stream) : BinaryReader(stream) {
         return values.ToList();
     }
 
+    /// <summary>
+    /// Overriden ReadString()
+    /// </summary>
+    /// <returns></returns>
     public override string ReadString() {
         int length = ReadInt32();
         byte[] buffer = ReadBytes(length);

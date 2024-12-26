@@ -65,6 +65,8 @@ public class PlaceBinary {
         switch(chunk.ChunkName) {
             case "META":
                 return new META(chunk);
+            case "INST":
+                return new INST(chunk);
 
             default:
                 return null;
