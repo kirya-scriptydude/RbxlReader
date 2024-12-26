@@ -64,7 +64,10 @@ public class PlaceBinary {
     private IChunkInfo? evaluateChunk(BinaryChunkData chunk) {
         switch(chunk.ChunkName) {
             case "META":
-                return new META(chunk);
+                META info = new(chunk);
+                METAChunk = info;
+                return info;
+            
             case "INST":
                 return new INST(chunk);
 

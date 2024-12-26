@@ -8,7 +8,7 @@ public class INST : IChunkInfo {
     public int Index {get; protected set;}
 
     public int InstanceCount {get; protected set;}
-    public List<int> InstanceIds {get; protected set;}
+    public List<int> InstanceIds {get; protected set;} = new List<int>();
 
     public List<bool>? RootedServices;
 
@@ -38,6 +38,6 @@ public class INST : IChunkInfo {
                 RootedServices.Add(isRoot);
             }
         }
-        
+
     }
 }
