@@ -18,7 +18,9 @@ public class PlaceBinary {
 
 
     public List<BinaryChunkData> Chunks = new();
+
     public META? METAChunk;
+    public List<INST> Instances = new List<INST>();
 
     /// <summary>
     /// Create class and parse from file

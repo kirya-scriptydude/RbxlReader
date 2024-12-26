@@ -17,10 +17,10 @@ public class INST : IChunkInfo {
         if (!loadNow) return;
 
         using (MemoryStream stream = new(raw.Data)) {
-            Load(stream);
+            Load(new RbxlBinaryReader(stream));
         }
     }
 
-    public void Load(MemoryStream stream) {
+    public void Load(RbxlBinaryReader reader) { 
     }
 }

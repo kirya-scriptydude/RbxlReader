@@ -10,13 +10,11 @@ public class META : IChunkInfo {
 
         if (!loadNow) return;
         using (MemoryStream stream = new(raw.Data)) {
-            Load(stream);
+            Load(new RbxlBinaryReader(stream));
         }
     }
 
-    public void Load(MemoryStream stream) {
-        BinaryReader reader = new(stream);
-
+    public void Load(RbxlBinaryReader reader) {
         int count = reader.ReadInt32();
 
         for (int i = 0; i > count; i++) {

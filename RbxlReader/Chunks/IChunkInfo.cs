@@ -6,5 +6,5 @@ public interface IChunkInfo {
     /// <summary>
     /// Read data from "Raw" and apply it here.
     /// </summary>
-    void Load(MemoryStream stream);
+    void Load(RbxlBinaryReader reader);
 }
