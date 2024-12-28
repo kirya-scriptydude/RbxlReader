@@ -29,7 +29,7 @@ public class PROP : IChunkInfo {
         ClassName = reader.ReadString();
         typeId = reader.ReadByte();
 
-        if (Raw.Rbxl.InstanceChunks[ClassName] == null)
+        if (Raw.Rbxl.ChunkInfo.INST[ClassName] == null)
             throw new NotImplementedException($"Unknown rbxl class: {ClassName}");
     }
 }

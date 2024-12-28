@@ -16,11 +16,14 @@ public class PlaceBinary {
     public int NumberInstances {get; protected set;}
     public long Reserved {get; protected set;}
 
-
+    /// <summary>
+    /// Raw chunk data
+    /// </summary>
     public List<BinaryChunkData> Chunks = new();
-
-    public META? METAChunk;
-    public Dictionary<string, INST> InstanceChunks {get; protected set;} = new();
+    /// <summary>
+    /// ChunkInfo instance struct, containing chunk information such as INST classes, or PROP properties.
+    /// </summary>
+    public ChunkStruct ChunkInfo = new();
 
     /// <summary>
     /// Create class and parse from file
@@ -65,12 +68,12 @@ public class PlaceBinary {
         switch(chunk.ChunkName) {
             case "META":
                 META info = new(chunk);
-                METAChunk = info;
+                ChunkInfo.META = info;
                 return info;
             
             case "INST":
                 var inst = new INST(chunk);
-                InstanceChunks.Add(inst.ClassName, inst);
+                ChunkInfo.INST.Add(inst.ClassName, inst);
                 return inst;
 
             default:
