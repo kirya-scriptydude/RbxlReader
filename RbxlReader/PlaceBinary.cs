@@ -25,6 +25,8 @@ public class PlaceBinary {
     /// </summary>
     public ChunkStruct ChunkInfo = new();
 
+    public INST[] IdToINST {get; protected set;}
+
     /// <summary>
     /// Create class and parse from file
     /// </summary>
@@ -33,6 +35,8 @@ public class PlaceBinary {
         using (FileStream file = File.Open(path, FileMode.Open)) {
             RbxlBinaryReader reader = new(file);
             parseHeader(file, reader);
+
+            IdToINST = new INST[NumberClasses];
 
             // parse chunks
             bool endReached = false;
@@ -50,7 +54,9 @@ public class PlaceBinary {
     /// <summary>
     /// Create empty PlaceBinary
     /// </summary>
-    public PlaceBinary() {}
+    public PlaceBinary() {
+        IdToINST = new INST[1];
+    }
 
     private void parseHeader(Stream stream, RbxlBinaryReader reader) {
         byte[] signature = reader.ReadBytes(14);
@@ -72,9 +78,15 @@ public class PlaceBinary {
                 return info;
             
             case "INST":
-                var inst = new INST(chunk);
+                INST inst = new(chunk);
                 ChunkInfo.INST.Add(inst.ClassName, inst);
+                IdToINST[inst.Index] = inst;
                 return inst;
+
+            case "PROP":
+                PROP propchunk = new(chunk);
+                ChunkInfo.PROP.Add(propchunk);
+                return propchunk;
 
             default:
                 return null;

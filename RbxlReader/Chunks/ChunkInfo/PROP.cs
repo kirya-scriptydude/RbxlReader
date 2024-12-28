@@ -9,7 +9,7 @@ public class PROP : IChunkInfo {
     public BinaryChunkData Raw {get; set;}
 
     public int ClassId {get; protected set;}
-    public string ClassName {get; protected set;} = "";
+    public string PropName {get; protected set;} = "";
     public INST? Class {get; protected set;} 
     
     public PropertyType Type => (PropertyType)typeId;
@@ -26,10 +26,10 @@ public class PROP : IChunkInfo {
 
     public void Load(RbxlBinaryReader reader) {
         ClassId = reader.ReadInt32();
-        ClassName = reader.ReadString();
+        PropName = reader.ReadString();
         typeId = reader.ReadByte();
 
-        if (Raw.Rbxl.ChunkInfo.INST[ClassName] == null)
-            throw new NotImplementedException($"Unknown rbxl class: {ClassName}");
+        Class = Raw.Rbxl.IdToINST[ClassId];
+        
     }
 }
