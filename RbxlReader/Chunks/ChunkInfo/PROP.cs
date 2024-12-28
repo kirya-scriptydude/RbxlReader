@@ -1,3 +1,5 @@
+using RbxlReader.DataTypes;
+
 namespace RbxlReader.Chunks;
 
 public class PROP : IChunkInfo {
@@ -5,7 +7,9 @@ public class PROP : IChunkInfo {
 
     public int ClassId {get; protected set;}
     public string ClassName {get; protected set;} = "";
+    public INST? Class {get; protected set;} 
     
+    public PropertyType Type => (PropertyType)typeId;
     private byte typeId;
 
     public PROP(BinaryChunkData raw, bool loadNow = true) {

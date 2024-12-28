@@ -1,3 +1,4 @@
+namespace RbxlReader.DataTypes;
 public enum PropertyType {
     Unknown,
     String,

@@ -20,7 +20,7 @@ public class PlaceBinary {
     public List<BinaryChunkData> Chunks = new();
 
     public META? METAChunk;
-    public List<INST> Instances = new List<INST>();
+    public Dictionary<string, INST> InstanceChunks {get; protected set;} = new();
 
     /// <summary>
     /// Create class and parse from file
@@ -69,7 +69,9 @@ public class PlaceBinary {
                 return info;
             
             case "INST":
-                return new INST(chunk);
+                var inst = new INST(chunk);
+                InstanceChunks.Add(inst.ClassName, inst);
+                return inst;
 
             default:
                 return null;
