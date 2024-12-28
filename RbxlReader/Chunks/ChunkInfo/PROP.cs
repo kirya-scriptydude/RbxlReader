@@ -2,6 +2,9 @@ using RbxlReader.DataTypes;
 
 namespace RbxlReader.Chunks;
 
+/// <summary>
+/// PROP is a chunk that defines individual property and holds information about them (CFrame, Vector3 etc.) 
+/// </summary>
 public class PROP : IChunkInfo {
     public BinaryChunkData Raw {get; set;}
 
@@ -25,5 +28,8 @@ public class PROP : IChunkInfo {
         ClassId = reader.ReadInt32();
         ClassName = reader.ReadString();
         typeId = reader.ReadByte();
+
+        if (Raw.Rbxl.InstanceChunks[ClassName] == null)
+            throw new NotImplementedException($"Unknown rbxl class: {ClassName}");
     }
 }

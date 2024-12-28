@@ -1,5 +1,8 @@
 using RbxlReader.Chunks;
 
+/// <summary>
+/// INST is a chunk that defines a Instance's class. Ex. Parts, Scripts and etc.
+/// </summary>
 public class INST : IChunkInfo {
     public BinaryChunkData Raw {get; set;}
 
