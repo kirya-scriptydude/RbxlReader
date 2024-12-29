@@ -1,6 +1,6 @@
 using RbxlReader.DataTypes;
 
-namespace RbxlReader.Instance;
+namespace RbxlReader.Instances;
 
 public class InstanceProperty {
     public PropertyType Type {get;}

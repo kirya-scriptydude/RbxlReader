@@ -1,4 +1,6 @@
-namespace RbxlReader.Instance;
+using RbxlReader.DataTypes;
+
+namespace RbxlReader.Instances;
 
 /// <summary>
 /// Instance is a basic building block of a roblox game. Holds various variables with various data-types.
@@ -13,7 +15,18 @@ public class Instance {
         property = props;
     }
 
+    public Instance(string className) {
+        ClassName = className;
+        property = new();
+    }
+
     public InstanceProperty? GetProperty(string name) {
         return property.ContainsKey(name) ? property[name] : null;
+    }
+
+    public void AddProperty(string name, PropertyType type, object value) {
+        property.Add(name,
+            new InstanceProperty(type, value)
+        );
     }
 }
