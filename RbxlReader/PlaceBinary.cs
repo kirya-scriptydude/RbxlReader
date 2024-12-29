@@ -26,6 +26,10 @@ public class PlaceBinary {
     /// </summary>
     public ChunkStruct ChunkInfo = new();
 
+    /// <summary>
+    /// Empty Instance that serves as a root for place's entire hierarchy. Throws an error if you try to reference Root's parent (does not exist)
+    /// </summary>
+    public Instance Root {get;} = new("Root");
     public INST[] IdToINST {get; protected set;}
     public Instance[] IdToInstance {get; protected set;}
 
