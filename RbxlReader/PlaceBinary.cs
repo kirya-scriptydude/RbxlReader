@@ -38,6 +38,8 @@ public class PlaceBinary {
     /// </summary>
     /// <param name="path"></param>
     public PlaceBinary(string path) {
+        Root.Rbxl = this;
+
         using (FileStream file = File.Open(path, FileMode.Open)) {
             RbxlBinaryReader reader = new(file);
             parseHeader(file, reader);
@@ -62,6 +64,8 @@ public class PlaceBinary {
     /// Create empty PlaceBinary
     /// </summary>
     public PlaceBinary() {
+        Root.Rbxl = this;
+
         IdToINST = new INST[1];
         IdToInstance = new Instance[1];
     }
@@ -103,6 +107,9 @@ public class PlaceBinary {
                 PROP propchunk = new(chunk);
                 ChunkInfo.PROP.Add(propchunk);
                 return propchunk;
+
+            case "PRNT":
+                return new PRNT(chunk);
 
             default:
                 return null;

@@ -1,4 +1,5 @@
 using RbxlReader.Chunks;
+using RbxlReader.Instances;
 
 public class PRNT : IChunkInfo {
     public BinaryChunkData Raw {get; set;}
@@ -22,5 +23,18 @@ public class PRNT : IChunkInfo {
 
         List<int> childIds = reader.ReadInstanceIds(InstanceCount);
         List<int> parentIds = reader.ReadInstanceIds(InstanceCount);
+
+        for (int i = 0; i < InstanceCount; i++) {
+            Instance child = Raw.Rbxl.IdToInstance[childIds[i]];
+            Instance parent;
+            if (parentIds[i] == -1) {
+                //null parent (parent is root)
+                parent = Raw.Rbxl.Root;
+            } else {
+                parent = Raw.Rbxl.IdToInstance[parentIds[i]];
+            }
+
+            parent.AddChild(child);
+        }
     }
 }
