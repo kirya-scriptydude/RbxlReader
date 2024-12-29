@@ -27,7 +27,6 @@ public class PlaceBinary {
     public ChunkStruct ChunkInfo = new();
 
     public INST[] IdToINST {get; protected set;}
-
     public Instance[] IdToInstance {get; protected set;}
 
     /// <summary>
@@ -90,6 +89,8 @@ public class PlaceBinary {
 
                 foreach (KeyValuePair<int, Instance> keyval in inst.LinkedInstances) {
                     IdToInstance[keyval.Key] = keyval.Value;
+
+                    keyval.Value.Rbxl = this;
                 }
                 
                 return inst;
