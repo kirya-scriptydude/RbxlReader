@@ -2,6 +2,7 @@
 
 using System.Text;
 using RbxlReader.Chunks;
+using RbxlReader.Instances;
 namespace RbxlReader;
 
 /// <summary>
@@ -27,6 +28,8 @@ public class PlaceBinary {
 
     public INST[] IdToINST {get; protected set;}
 
+    public Instance[] IdToInstance {get; protected set;}
+
     /// <summary>
     /// Create class and parse from file
     /// </summary>
@@ -37,6 +40,7 @@ public class PlaceBinary {
             parseHeader(file, reader);
 
             IdToINST = new INST[NumberClasses];
+            IdToInstance = new Instance[NumberInstances];
 
             // parse chunks
             bool endReached = false;
@@ -56,6 +60,7 @@ public class PlaceBinary {
     /// </summary>
     public PlaceBinary() {
         IdToINST = new INST[1];
+        IdToInstance = new Instance[1];
     }
 
     private void parseHeader(Stream stream, RbxlBinaryReader reader) {
@@ -80,7 +85,13 @@ public class PlaceBinary {
             case "INST":
                 INST inst = new(chunk);
                 ChunkInfo.INST.Add(inst.ClassName, inst);
+
                 IdToINST[inst.Index] = inst;
+
+                foreach (KeyValuePair<int, Instance> keyval in inst.LinkedInstances) {
+                    IdToInstance[keyval.Key] = keyval.Value;
+                }
+                
                 return inst;
 
             case "PROP":

@@ -1,4 +1,6 @@
+using System.Security.Cryptography.X509Certificates;
 using RbxlReader.Chunks;
+using RbxlReader.Instances;
 
 /// <summary>
 /// INST is a chunk that defines a Instance's class. Ex. Parts, Scripts and etc.
@@ -11,7 +13,11 @@ public class INST : IChunkInfo {
     public int Index {get; protected set;}
 
     public int InstanceCount {get; protected set;}
-    public List<int> InstanceIds {get; protected set;} = new List<int>();
+    public List<int> InstanceIds {get; protected set;} = new();
+    /// <summary>
+    /// Instances that share the exact class that's stated in INST.
+    /// </summary>
+    public Dictionary<int, Instance> LinkedInstances {get; protected set;} = new();
 
     public List<bool>? RootedServices;
 
@@ -42,5 +48,9 @@ public class INST : IChunkInfo {
             }
         }
 
+        foreach (int id in InstanceIds) {
+            Instance instance = new(ClassName);
+            LinkedInstances.Add(id, instance);
+        }
     }
 }
