@@ -109,7 +109,9 @@ public class PlaceBinary {
                 return propchunk;
 
             case "PRNT":
-                return new PRNT(chunk);
+                PRNT parent = new(chunk);
+                ChunkInfo.PRNT = parent;
+                return parent;
 
             default:
                 return null;

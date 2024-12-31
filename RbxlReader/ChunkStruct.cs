@@ -9,6 +9,7 @@ public struct ChunkStruct {
     /// </summary>
     public Dictionary<string, INST> INST = new();
     public List<PROP> PROP = new();
+    public PRNT? PRNT;
 
     public ChunkStruct() {}
 }
