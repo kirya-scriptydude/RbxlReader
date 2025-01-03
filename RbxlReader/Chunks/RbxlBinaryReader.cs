@@ -9,6 +9,8 @@ namespace RbxlReader.Chunks;
 /// </summary>
 public class RbxlBinaryReader(Stream stream) : BinaryReader(stream) {
 
+    private byte[] lastStringBuffer = Array.Empty<byte>();
+
     /// <summary>
     /// credits to CloneTrooper for this code is stole
     /// </summary>
@@ -68,5 +70,9 @@ public class RbxlBinaryReader(Stream stream) : BinaryReader(stream) {
         byte[] buffer = ReadBytes(length);
 
         return Encoding.UTF8.GetString(buffer);
+    }
+
+    public byte[] GetLastStringBuffer() {
+        return lastStringBuffer;
     }
 }

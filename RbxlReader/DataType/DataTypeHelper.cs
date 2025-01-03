@@ -1,3 +1,6 @@
+using RbxlReader.Chunks;
+using RbxlReader.Instances;
+
 namespace RbxlReader.DataTypes;
 
 public static class DataTypeHelper {
@@ -41,4 +44,54 @@ public static class DataTypeHelper {
         {PropertyType.Faces, typeof(Faces)}
 
     };
+
+    /// <summary>
+    /// Parse the data left in PROP chunk. Need to read PROP header first (Class, PropertyName, etc.) before calling this method.
+    /// </summary>
+    public static InstanceProperty[] ParsePropertiesInChunk(RbxlBinaryReader reader, PropertyType type, int instCount) {
+
+        InstanceProperty[] props = new InstanceProperty[instCount];
+        Type? typeClass = Types[type];
+
+        if (typeClass == null)
+            throw new ArgumentNullException($"Type {type} isn't implemented.");
+
+        //  shorthand functions
+        var readInts = new Func<int[]>(() => reader.ReadInterleaved(instCount, reader.RotateInt32));
+        var readFloats = new Func<float[]>(() => reader.ReadInterleaved(instCount, reader.RotateFloat));
+
+        switch(type) {
+
+            case PropertyType.String:
+                readProps(props, instCount, i => {
+
+                    string value = reader.ReadString();
+                    
+                    byte[] buffer = reader.GetLastStringBuffer();
+                    props[i].RawBuffer = buffer;
+
+                    return value;
+
+                });
+                break;
+            
+            case PropertyType.Bool:
+                readProps(props, instCount, i => reader.ReadBoolean());
+                break;
+
+        }
+
+        return props;
+    }
+
+    private static void readProps(InstanceProperty[] props, int instCount, Func<int, object> read) {
+        for (int i = 0; i < instCount; i++) {
+            var prop = props[i];
+
+            if (prop == null)
+                continue;
+            
+            prop.Value = read(i);
+        }
+    }
 }
