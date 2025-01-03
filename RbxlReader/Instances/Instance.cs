@@ -31,4 +31,7 @@ public partial class Instance {
             new InstanceProperty(type, value)
         );
     }
+    public void AddProperty(string name, InstanceProperty prop) {
+        property.Add(name, prop);
+    }
 }

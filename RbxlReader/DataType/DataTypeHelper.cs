@@ -47,10 +47,9 @@ public static class DataTypeHelper {
 
     /// <summary>
     /// Parse the data left in PROP chunk. Need to read PROP header first (Class, PropertyName, etc.) before calling this method.
+    /// Writes into props array.
     /// </summary>
-    public static InstanceProperty[] ParsePropertiesInChunk(RbxlBinaryReader reader, PropertyType type, int instCount) {
-
-        InstanceProperty[] props = new InstanceProperty[instCount];
+    public static void ParsePropertiesInChunk(RbxlBinaryReader reader, PropertyType type, int instCount, InstanceProperty[] props) {
         Type? typeClass = Types[type];
 
         if (typeClass == null)
@@ -182,9 +181,11 @@ public static class DataTypeHelper {
                 break;
             }
 
-        }
+            default: {
+                break;
+            }
 
-        return props;
+        }
     }
 
     private static void readProps(InstanceProperty[] props, int instCount, Func<int, object> read) {
