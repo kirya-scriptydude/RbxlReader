@@ -75,9 +75,63 @@ public static class DataTypeHelper {
                 });
                 break;
             
-            case PropertyType.Bool:
+            case PropertyType.Bool: {
                 readProps(props, instCount, i => reader.ReadBoolean());
                 break;
+            }
+            
+            case PropertyType.Int: {
+                int[] ints = readInts();
+                readProps(props, instCount, i => ints[i]);
+                break;
+            }
+            
+            case PropertyType.Float: {
+                float[] floats = readFloats();
+                readProps(props, instCount, i => floats[i]);
+                break;
+            }
+            
+            case PropertyType.Double: {
+                readProps(props, instCount, i => reader.ReadDouble());
+                break;
+            }
+
+            case PropertyType.UDim: {
+                float[] scales = readFloats();
+                int[] offsets = readInts();
+
+                readProps(props, instCount,i => {
+                    float scale = scales[i];
+                    int offset = offsets[i];
+                    return new UDim(scale, offset);
+                });
+
+                break;
+            }
+
+            case PropertyType.UDim2: {
+                float[] scalesX = readFloats();
+                float[] scalesY = readFloats();
+
+                int[] offsetsX = readInts();
+                int[] offsetsY = readInts();
+
+                readProps(props, instCount, i => {
+                    float scaleX = scalesX[i];
+                    float scaleY = scalesY[i];
+
+                    int offsetX = offsetsX[i];
+                    int offsetY = offsetsY[i];
+
+                    return new UDim2(
+                        new UDim(scaleX, offsetX),
+                        new UDim(scaleY, offsetY)
+                    );
+                });
+                
+                break;
+            }
 
         }
 
