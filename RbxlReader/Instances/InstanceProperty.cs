@@ -4,10 +4,13 @@ namespace RbxlReader.Instances;
 
 public class InstanceProperty {
     public PropertyType Type {get;}
-    object rawValue;
+
+    public object Value {get; set;}
+    public byte[] RawBuffer = Array.Empty<byte>();
+    
 
     public InstanceProperty(PropertyType type, object value) {
         this.Type = type;
-        rawValue = value;
+        Value = value;
     }
 }
