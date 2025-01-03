@@ -72,6 +72,8 @@ public class RbxlBinaryReader(Stream stream) : BinaryReader(stream) {
         return Encoding.UTF8.GetString(buffer);
     }
 
+    public float ReadFloat() => ReadSingle();
+
     public byte[] GetLastStringBuffer() {
         return lastStringBuffer;
     }

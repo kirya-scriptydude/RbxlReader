@@ -129,7 +129,56 @@ public static class DataTypeHelper {
                         new UDim(scaleY, offsetY)
                     );
                 });
+
+                break;
+            }
+
+            case PropertyType.Vector3: {
+                float[] Xtable = readFloats(),
+                        Ytable = readFloats(),
+                        Ztable = readFloats();
                 
+                readProps(props, instCount, i => {
+                    float x = Xtable[i],
+                        y = Ytable[i],
+                        z = Ztable[i];
+                    
+                    return new Vector3(x, y, z);
+                });
+
+                break;
+            }
+
+            case PropertyType.Vector2: {
+                float[] Xtable = readFloats(),
+                        Ytable = readFloats();
+                
+                readProps(props, instCount, i => {
+                    float x = Xtable[i],
+                        y = Ytable[i];
+                    
+                    return new Vector2(x, y);
+                });
+
+                break;
+            }
+
+            case PropertyType.Ray: {
+                readProps(props, instCount, i => {
+                    float posX = reader.ReadFloat(),
+                        posY = reader.ReadFloat(),
+                        posZ = reader.ReadFloat();
+
+                    float dirX = reader.ReadFloat(),
+                        dirY = reader.ReadFloat(),
+                        dirZ = reader.ReadFloat();
+                    
+                    var origin = new Vector3(posX, posY, posZ);
+                    var dir = new Vector3(dirX, dirY, dirZ);
+
+                    return new Ray(origin, dir);
+                });
+
                 break;
             }
 
