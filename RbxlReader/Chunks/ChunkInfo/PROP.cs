@@ -30,8 +30,10 @@ public class PROP : IChunkInfo {
         PropName = reader.ReadString();
         typeId = reader.ReadByte();
 
-        Class = Raw.Rbxl.IdToINST[ClassId];
+        if (!DataTypeHelper.UsedTypes.Contains(Type))
+            return; //waste of time, dont decode
 
+        Class = Raw.Rbxl.IdToINST[ClassId];
         var props = new InstanceProperty[Class.InstanceCount];
 
         for (int i = 0; i < Class.InstanceCount; i++) {
@@ -43,16 +45,6 @@ public class PROP : IChunkInfo {
             instance.AddProperty(PropName, prop);
         }
 
-
-        //some code for testing
-        if (Type == PropertyType.Vector3) {
-            DataTypeHelper.ParsePropertiesInChunk(reader, Type, Class.InstanceCount, props);
-
-            foreach (InstanceProperty property in props) {
-                Vector3 vector3 = (Vector3)property.Value;
-                Console.WriteLine(vector3);
-            }
-        }
-        
+        DataTypeHelper.ParsePropertiesInChunk(reader, Type, Class.InstanceCount, props);
     }
 }

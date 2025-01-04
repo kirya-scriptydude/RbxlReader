@@ -4,6 +4,9 @@ using RbxlReader.Instances;
 namespace RbxlReader.DataTypes;
 
 public static class DataTypeHelper {
+    /// <summary>
+    /// PropertyType enum entry to actual C# Type
+    /// </summary>
     public static readonly IReadOnlyDictionary<PropertyType, Type> Types = new Dictionary<PropertyType, Type>() {
         // Basics
         {PropertyType.Int, typeof(int)},
@@ -43,6 +46,25 @@ public static class DataTypeHelper {
         {PropertyType.Axes, typeof(Axes)},
         {PropertyType.Faces, typeof(Faces)}
 
+    };
+
+    /// <summary>
+    /// Property Type whitelist that indicates what properties to look for.
+    /// Maybe permanent or maybe temporary idk, dont wanna work on something i wont use.
+    /// </summary>
+    public static readonly IReadOnlyList<PropertyType> UsedTypes = new List<PropertyType>() {
+        PropertyType.String,
+        PropertyType.Bool,
+        PropertyType.Int,
+        PropertyType.Int64,
+        PropertyType.Float,
+        PropertyType.Double,
+
+        PropertyType.Vector3,
+        PropertyType.CFrame,
+        PropertyType.OptionalCFrame,
+        
+        PropertyType.Color3
     };
 
     /// <summary>
