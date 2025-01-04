@@ -1,5 +1,6 @@
 #pragma warning disable SYSLIB0001 // Type or member is obsolete. Need to be using UTF-7
 
+using System.ComponentModel.Design.Serialization;
 using System.Text;
 using RbxlReader.Chunks;
 using RbxlReader.Instances;
@@ -30,6 +31,8 @@ public class PlaceBinary {
     /// Empty Instance that serves as a root for place's entire hierarchy. Throws an error if you try to reference Root's parent (does not exist)
     /// </summary>
     public Instance Root {get;} = new("Root");
+    public Instance? Workspace => Root.FindFirstChildOfClass("Workspace");
+    
     public INST[] IdToINST {get; protected set;}
     public Instance[] IdToInstance {get; protected set;}
 

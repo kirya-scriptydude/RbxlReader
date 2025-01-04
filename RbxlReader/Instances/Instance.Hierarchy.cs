@@ -40,4 +40,8 @@ public partial class Instance {
     public void Destroy() {
         parentInst = null;
     }
+
+    public Instance? FindFirstChildOfClass(string className) {
+        return children.FirstOrDefault(x => x.ClassName == className);
+    }
 }
