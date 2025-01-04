@@ -9,6 +9,9 @@ public partial class Instance {
     public PlaceBinary? Rbxl {get; set;}
 
     public string ClassName {get; protected set;}
+    public string Name {get {
+        return property.ContainsKey("Name") ? (string)property["Name"].Value : ClassName;
+    }}
     
     private Dictionary<string, InstanceProperty> property;
 
