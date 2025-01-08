@@ -118,41 +118,6 @@ public static class DataTypeHelper {
                 break;
             }
 
-            case PropertyType.UDim: {
-                float[] scales = readFloats();
-                int[] offsets = readInts();
-
-                readProps(props, instCount,i => {
-                    float scale = scales[i];
-                    int offset = offsets[i];
-                    return new UDim(scale, offset);
-                });
-
-                break;
-            }
-
-            case PropertyType.UDim2: {
-                float[] scalesX = readFloats();
-                float[] scalesY = readFloats();
-
-                int[] offsetsX = readInts();
-                int[] offsetsY = readInts();
-
-                readProps(props, instCount, i => {
-                    float scaleX = scalesX[i];
-                    float scaleY = scalesY[i];
-
-                    int offsetX = offsetsX[i];
-                    int offsetY = offsetsY[i];
-
-                    return new UDim2(
-                        new UDim(scaleX, offsetX),
-                        new UDim(scaleY, offsetY)
-                    );
-                });
-
-                break;
-            }
 
             case PropertyType.Vector3: {
                 float[] Xtable = readFloats(),
@@ -179,25 +144,6 @@ public static class DataTypeHelper {
                         y = Ytable[i];
                     
                     return new Vector2(x, y);
-                });
-
-                break;
-            }
-
-            case PropertyType.Ray: {
-                readProps(props, instCount, i => {
-                    float posX = reader.ReadFloat(),
-                        posY = reader.ReadFloat(),
-                        posZ = reader.ReadFloat();
-
-                    float dirX = reader.ReadFloat(),
-                        dirY = reader.ReadFloat(),
-                        dirZ = reader.ReadFloat();
-                    
-                    var origin = new Vector3(posX, posY, posZ);
-                    var dir = new Vector3(dirX, dirY, dirZ);
-
-                    return new Ray(origin, dir);
                 });
 
                 break;
