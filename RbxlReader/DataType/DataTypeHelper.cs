@@ -106,6 +106,12 @@ public static class DataTypeHelper {
                 readProps(props, instCount, i => ints[i]);
                 break;
             }
+
+            case PropertyType.Int64: {
+                long[] ints = reader.ReadInterleaved(instCount, reader.RotateInt64);
+                readProps(props, instCount, i => ints[i]);
+                break;
+            }
             
             case PropertyType.Float: {
                 float[] floats = readFloats();
