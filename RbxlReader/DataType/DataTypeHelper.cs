@@ -62,7 +62,6 @@ public static class DataTypeHelper {
 
         PropertyType.Vector3,
         PropertyType.CFrame,
-        PropertyType.OptionalCFrame,
         
         PropertyType.Color3
     };
@@ -141,17 +140,59 @@ public static class DataTypeHelper {
                 break;
             }
 
-            case PropertyType.Vector2: {
-                float[] Xtable = readFloats(),
-                        Ytable = readFloats();
-                
-                readProps(props, instCount, i => {
-                    float x = Xtable[i],
-                        y = Ytable[i];
-                    
-                    return new Vector2(x, y);
-                });
+            case PropertyType.CFrame: {
+                float[][] matrices = new float[instCount][];
 
+                for (int i = 0; i < instCount; i++) {
+                    byte rawOrientId = reader.ReadByte();
+
+                    if (rawOrientId > 0) {
+
+                        var cf = CFrame.FromOrientId(rawOrientId);
+                        matrices[i] = cf.GetComponents();
+
+                    } else {
+
+                        float[] matrix = new float[9];
+
+                        for (int v = 0; v < 9; v++) {
+                            float value = reader.ReadFloat();
+                            matrix[v] = value;
+                        }
+
+                        matrices[i] = matrix;
+                    }
+                }
+
+                float[] cfX = readFloats(),
+                        cfY = readFloats(),
+                        cfZ = readFloats();
+                    
+                CFrame[] cframes = new CFrame[instCount];
+                for (int i = 0; i < instCount; i++) {
+                    float[] matrix = matrices[i];
+
+                    float x = cfX[i],
+                        y = cfY[i],
+                        z = cfZ[i];
+
+                    float[] components;
+
+                    if (matrix.Length == 12) {
+                        matrix[0] = x;
+                        matrix[1] = y;
+                        matrix[2] = z;
+
+                        components = matrix; 
+                    } else {
+                        float[] pos = new float[] {x,y,z};
+                        components = pos.Concat(matrix).ToArray();
+                    }
+
+                    cframes[i] = new(components);
+                }
+
+                readProps(props, instCount, i => cframes[i]);
                 break;
             }
 
